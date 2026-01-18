@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicell Plus Premium</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* Font Family */
+        @font-face {
+            font-family: 'Matter-TRIAL';
+            src: url('Fonts/Matter/Matter-TRIAL-SemiBold.otf') format('opentype');
+            font-weight: 670;
+        }
+
+        @font-face {
+            font-family: 'FAIRE Octave Trial Variable';
+            src: url('Fonts/FAIRE Octave/FAIREOctaveTrialVariable.ttf') format('truetype');
+            font-weight: 300;
+            font-style: italic;
+        }
+        :root {
+            /* Màu sắc lấy từ hình ảnh */
+            --text-color: #FAF5F6;
+            /* Cập nhật lại biến font */
+            --font-sans: 'Matter-TRIAL', sans-serif;
+            --font-serif: 'FAIRE Octave Trial Variable', serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            color: var(--text-color);
+            font-family: var(--font-sans);
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- 1. VIDEO NỀN --- */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 1; 
+            pointer-events: none;
+        }
+
+        /* --- 2. HEADER AREA --- */
+        .header-container {
+            width: 100%;
+            /* Chiều cao ban đầu: 160px */
+            height: 160px; 
+            padding: 20px 24px 10px 24px;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+            
+            position: relative; 
+            z-index: 2; 
+            
+            /* Hiệu ứng co chiều cao mượt mà */
+            transition: height 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        /* KHI ANIMATE: Header co lại còn 70px (chỉ đủ chứa hàng trên) */
+        body.animate-mode .header-container {
+            height: 70px; 
+        }
+
+        /* Hàng trên cùng (Logo nhỏ + Liên hệ) */
+        .top-row-wrapper {
+            display: flex;
+            align-items: center; 
+            width: 100%;
+            height: 40px; 
+            position: relative;
+        }
+
+        /* Logo Nhỏ */
+        .logo-small-img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 77px; 
+            height: 40px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 3.0s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Nút Liên Hệ */
+        .contact-wrapper {
+            margin-left: auto; 
+            display: block;
+        }
+
+        .contact-img {
+            width: 228px;
+            height: 40px;
+            display: block;
+        }
+
+        /* Logo Lớn */
+        .logo-big-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: auto;
+            transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top left; 
+            opacity: 1;
+        }
+
+        .logo-big-img {
+            width: 354px;
+            height: auto;
+            max-width: 100%;
+            display: block;
+        }
+
+        /* --- ANIMATION LOGIC --- */
+        body.animate-mode .logo-small-img {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        body.animate-mode .logo-big-wrapper {
+            opacity: 0;
+            transform: translate(-50px, -100px) scale(0.2);
+            pointer-events: none;
+        }
+
+        /* --- 3. CONTENT AREA --- */
+        .content-area {
+            flex: 1;
+            padding-left: 24px;
+            padding-right: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+            position: relative;
+            z-index: 2; 
+        }
+
+        /* TEXT GROUP TOP */
+        .text-group-top {
+            text-align: left;
+            /* TRẠNG THÁI BAN ĐẦU: 
+               Cách đáy header (160px) một khoảng 30px */
+            margin-top: 30px; 
+            
+            transition: margin-top 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* TRẠNG THÁI SAU KHI ANIMATE:
+           Header còn 70px.
+           Ta tăng margin-top lên 80px.
+           => Tổng vị trí Y = 70 + 80 = 150px.
+           (Vị trí cũ là 160 + 30 = 190px).
+           => Chữ trượt lên khoảng 40px, lấp vào chỗ Logo to cũ, 
+           chứ không trượt tít lên trên (Y=100px) như trước.
+        */
+        body.animate-mode .text-group-top {
+            margin-top: 80px; 
+        }
+
+        .text-group-bottom {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-top: auto; 
+            margin-bottom: 120px; 
+        }
+
+        h1 { margin: 0; }
+
+        .font-modern {
+            font-family: var(--font-sans);
+            font-weight: 800; 
+            font-size: 48px; 
+            line-height: 100%; 
+            letter-spacing: -0.01em; 
+            margin-bottom: 5px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .font-classic {
+            font-family: var(--font-serif);
+            font-weight: 400; 
+            font-style: italic;
+            font-size: 64px;
+            line-height: 100%;
+            letter-spacing: -0.01em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .footer-pill-container {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .footer-pill {
+            background-color: rgba(255, 255, 255, 0.45); 
+            order: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 10px 30px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #222;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline class="video-background">
+        <source src="videos/page1_func_1.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+
+    <div class="header-container">
+        <div class="top-row-wrapper">
+            <img src="logos/mobile_small_white.svg" alt="M+" class="logo-small-img">
+            <a href="tel:0916887158" class="contact-wrapper">
+                <img src="images/contact_mobile.png" alt="Liên hệ ngay" class="contact-img">
+            </a>
+        </div>
+
+        <div class="logo-big-wrapper">
+            <img src="logos/mobile_big.svg" alt="Medicell Plus Premium" class="logo-big-img">
+        </div>
+    </div>
+
+    <div class="content-area">
+        <div class="text-group-top">
+            <h1 class="font-modern">Vẻ đẹp</h1>
+            <h1 class="font-classic">hồi sinh</h1>
+        </div>
+
+        <div class="text-group-bottom">
+            <h1 class="font-modern">từ sâu</h1>
+            <h1 class="font-classic">bên trong</h1>
+        </div>
+    </div>
+
+    <div class="footer-pill-container">
+        <a href="#" class="footer-pill">medicell.com.vn</a>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.body.classList.add('animate-mode');
+            }, 3000); // Sau 3 giây thì chạy hiệu ứng
+        });
+    </script>
+
+</body>
+</html>

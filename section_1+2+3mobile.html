@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Medicell Plus Premium</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- KHAI BÁO FONT --- */
+        @font-face {
+            font-family: 'Matter-TRIAL';
+            src: url('Fonts/Matter/Matter-TRIAL-SemiBold.otf') format('opentype');
+            font-weight: 670;
+        }
+        @font-face {
+            font-family: 'Matter-TRIAL-Regular';
+            src: url('Fonts/Matter/Matter-TRIAL-Regular.otf') format('opentype');
+            font-weight: 430;
+        }
+        @font-face {
+            font-family: 'FAIRE Octave Trial Variable';
+            src: url('Fonts/FAIRE Octave/FAIREOctaveTrialVariable.ttf') format('truetype');
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        :root {
+            --text-color: #FAF5F6;
+            --text-dark: #333333;
+            --font-sans: 'Matter-TRIAL', sans-serif;
+            --font-sans-reg: 'Matter-TRIAL-Regular', sans-serif;
+            --font-serif: 'FAIRE Octave Trial Variable', serif;
+            --bg-pink: #FFF0F5; 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 100%; 
+            min-height: 100vh;
+            color: var(--text-color); 
+            font-family: var(--font-sans); 
+            position: relative;
+        }
+
+        section {
+            width: 100%; height: 100vh; position: relative; overflow: hidden; 
+        }
+
+        /* --- HEADER --- */
+        .header-container {
+            width: 100%; position: fixed; top: 0; left: 0;
+            height: 160px; 
+            padding: 20px 24px 10px 24px;
+            display: flex; flex-direction: column; justify-content: space-between; 
+            z-index: 100; 
+            transition: height 3.0s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden; pointer-events: none; 
+        }
+        .header-container * { pointer-events: auto; }
+
+        body.animate-mode .header-container { height: 70px; }
+
+        .top-row-wrapper {
+            display: flex; align-items: center; width: 100%; height: 40px; position: relative;
+        }
+
+        /* --- LOGO NHỎ --- */
+        .logo-switch-container {
+            position: absolute; left: 0; top: 0;
+            width: 77px; height: 40px; 
+            opacity: 0; transform: scale(0.8);
+            transition: opacity 0.5s ease, transform 0.5s ease; 
+        }
+
+        body.animate-mode .logo-switch-container { 
+            opacity: 1; transform: scale(1);
+            transition: opacity 1.0s ease, transform 1.0s ease; 
+        }
+
+        body.section-2-active .logo-switch-container {
+            opacity: 1; transform: scale(1); transition-delay: 0s; 
+        }
+
+        .logo-small {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            transition: opacity 1s ease-in-out;
+        }
+        .logo-white { opacity: 1; z-index: 2; } 
+        .logo-red { opacity: 0; z-index: 1; }
+
+        body.section-2-active .logo-white { opacity: 0; }
+        body.section-2-active .logo-red { opacity: 1; }
+
+        .contact-wrapper { margin-left: auto; display: block; }
+        .contact-img { width: 228px; height: 40px; display: block; }
+
+        /* --- LOGO LỚN --- */
+        .logo-big-wrapper {
+            display: flex; justify-content: center; width: 100%; height: auto;
+            opacity: 1; transform: translate(0, 0) scale(1);
+            transform-origin: top left; transition: all 0.5s ease;
+        }
+        .logo-big-img { width: 100%; height: auto; display: block; }
+        
+        @keyframes logoMoveUpThenLeft {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            30% { transform: translate(0, -115px) scale(0.7); opacity: 1; } 
+            90% { transform: translate(-135px, -115px) scale(0.23); opacity: 1; } 
+            100% { transform: translate(-135px, -115px) scale(0.23); opacity: 0; } 
+        }
+
+        body.animate-mode .logo-big-wrapper {
+            animation: logoMoveUpThenLeft 3.0s forwards; transition: none;
+        }
+        body.section-2-active .logo-big-wrapper {
+            opacity: 0; pointer-events: none; 
+        }
+
+        /* --- SECTION 1 --- */
+        #section-1 {
+            display: flex; flex-direction: column; padding-top: 160px; z-index: 10;
+        }
+        .video-background {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -2;
+        }
+        .video-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); z-index: -1; pointer-events: none;
+        }
+        .content-area {
+            flex: 1; padding: 0 24px; display: flex; flex-direction: column; justify-content: flex-start; 
+        }
+        .text-group-top {
+            text-align: left; margin-top: 30px; transition: margin-top 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        body.animate-mode .text-group-top { 
+            margin-top: 80px; transition: margin-top 3.0s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .text-group-bottom {
+            text-align: right; display: flex; flex-direction: column;
+            align-items: flex-end; margin-top: auto; margin-bottom: 120px; 
+        }
+        h1 { margin: 0; }
+        .font-modern {
+            font-family: var(--font-sans); font-weight: 800; font-size: 48px; 
+            line-height: 100%; letter-spacing: -0.01em; margin-bottom: 5px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .font-classic {
+            font-family: var(--font-serif); font-weight: 400; font-style: italic; 
+            font-size: 64px; line-height: 100%; letter-spacing: -0.01em; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .footer-pill-container {
+            position: absolute; bottom: 30px; left: 0; width: 100%;
+            display: flex; justify-content: center; z-index: 2;
+        }
+        .footer-pill {
+            background-color: rgba(255, 255, 255, 0.45); 
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 10px 30px; border-radius: 24px;
+            font-size: 14px; font-weight: 600; color: #222;
+            text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* --- SECTION 2 --- */
+        #section-2 {
+            z-index: 20;
+            background-color: #FAF5F6; 
+            background-image: linear-gradient(0deg, rgba(230, 0, 38, 0.1), rgba(230, 0, 38, 0.1));
+        }
+
+        .s2-intro-text {
+            position: absolute; top: 22%; left: 50%; transform: translateX(-50%);
+            width: 92px; height: 24px; font-family: var(--font-sans-reg);
+            color: rgba(24, 1, 3, 0.75); font-size: 24px; line-height: 24px;
+            text-align: center; white-space: nowrap; z-index: 4; margin: 0;
+        }
+
+        .s2-product-container {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 100%; height: auto;
+            display: flex; justify-content: center; align-items: center; z-index: 2;
+        }
+        .s2-product-img {
+            width: 170px; height: auto; position: relative; z-index: 3;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+        }
+
+        /* --- HIỆU ỨNG GLASS BUBBLE (Update từ file demo) --- */
+        .s2-blur-circle {
+            position: absolute; width: 378px; height: 378px;
+            border-radius: 50%;
+            z-index: 2; 
+            
+            /* Style giống file demo: Nền mờ nhẹ, border trong suốt */
+            background: rgba(255, 255, 255, 0.08); 
+            border: 2px solid transparent;
+            /* Box shadow tạo viền sáng mạnh và bóng đổ */
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.6), 0 16px 32px rgba(0,0,0,0.12);
+            
+            /* Áp dụng SVG Filter Distortion */
+            backdrop-filter: url(#liquid-distortion);
+            -webkit-backdrop-filter: url(#liquid-distortion);
+        }
+
+        .s2-marquee-container {
+            position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 100%;
+            overflow: hidden; z-index: 1; white-space: nowrap;
+        }
+        .s2-marquee-text {
+            display: inline-block; font-family: 'FAIRE Octave Trial Variable', serif; 
+            font-weight: 300; font-style: italic; font-size: 128px;
+            color: rgba(24, 1, 3, 0.75); 
+            padding-left: 100%;
+            animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+        /* --- HIỆU ỨNG VỆT SÁNG NỀN (LIGHT STREAKS) --- */
+        .s2-light-effect {
+            position: absolute;
+            background-color: #FAF5F6;
+            
+            /* Thông số quan trọng từ thiết kế */
+            opacity: 0.1; /* Giảm xuống 10% để không che mất nền */
+            mix-blend-mode: plus-lighter;
+            filter: blur(128px);
+            
+            pointer-events: none;
+            z-index: 0;
+            
+            /* Xoay từ góc trái trên để bám theo tia dọc định vị (57px) */
+            transform-origin: top left;
+        }
+
+        .light-1 {
+            /* Thông số Light 1 */
+            width: 345px;
+            height: 873px;
+            top: 1px;
+            left: 57px; /* Bám theo tia dọc */
+            
+            /* Xoay -25 độ để tạo hướng chéo \ (Trên-Trái xuống Dưới-Phải) khớp với tia đỏ */
+            transform: rotate(-25deg); 
+        }
+
+        .light-2 {
+            /* Thông số Light 2 */
+            width: 223px;
+            height: 603px;
+            top: 271px;
+            left: 57px; /* Bám theo tia dọc (thẳng hàng với Light 1) */
+            transform: rotate(-25deg);
+        }
+        .s2-title-container {
+            position: absolute; top: 76%; width: 100%; text-align: center; z-index: 4;
+        }
+        .s2-title-bottom {
+            font-family: var(--font-sans-reg);font-weight: 430; font-size: 36px; color: #180103; line-height: 1.1;
+        }
+        .s2-volume {
+            margin-top: 10px; font-family: var(--font-sans-reg); font-size: 14px; color: rgba(24, 1, 3, 0.5); ;
+        }
+
+        /* --- SECTION 3 (ĐÃ SỬA LỖI LAYOUT) --- */
+        #section-3 {
+            background-color: #FAF5F6;
+            
+            /* Padding lớn để tránh header che */
+            padding-top: 100px; 
+            padding-bottom: 80px;
+            
+            /* Đảm bảo chiều cao tự nhiên */
+            height: auto; 
+            min-height: 100vh;
+            overflow: visible;
+            
+            /* Giúp scroll snap dừng đúng vị trí dưới header */
+            scroll-margin-top: 70px;
+        }
+
+        .s3-header {
+            padding: 7% 24px 20px 24px;
+            position: relative;
+        }
+
+        .s3-header h2 {
+            color: var(--Secondary, rgba(24, 1, 3, 0.75));
+            font-feature-settings: 'dlig' on;
+            font-family: var(--family-highlight, "FAIRE Octave Trial Variable");
+            font-size: var(--size-display, 64px);
+            font-style: italic;
+            font-weight: 300;
+            line-height: 100%; /* 64px */
+            letter-spacing: -0.64px;
+        }
+        .s3-header h2 span { font-family: 'FAIRE Octave Trial Variable', serif; color: #E60026; }
+        
+        .s3-header p {
+            color: var(--Secondary, rgba(24, 1, 3, 0.75));
+            font-feature-settings: 'dlig' on;
+            font-family: var(--family-main, Matter-TRIAL);
+            font-size: var(--size-h3, 24px);
+            font-style: normal;
+            font-weight: 430;
+            line-height: 100%; /* 24px */
+            letter-spacing: -1.2px;
+        }
+        
+        .s3-header h3 {
+            color: var(--Primary, #180103);
+            font-feature-settings: 'dlig' on;
+            font-family: var(--family-main, Matter-TRIAL);
+            font-size: var(--size-h1, 48px);
+            font-style: normal;
+            font-weight: 430;
+            line-height: 100%; /* 48px */
+            letter-spacing: -2.4px;
+                    }
+
+        /* --- ẢNH SẢN PHẨM TRANG TRÍ SECTION 3 --- */
+        .s3-deco-product {
+            position: absolute; 
+            right: 24px; /* Giữ khoảng cách lề phải */
+            
+            /* Đẩy xuống vị trí thấp hơn để khớp thiết kế (cũ là 60px) */
+            top: 40%px; 
+            
+            /* Kích thước chính xác từ Inspector */
+            width: 98px; 
+            height: 197px; 
+            
+            object-fit: contain; /* Đảm bảo ảnh không bị méo */
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1)); /* Bóng đổ nhẹ cho nổi khối */
+            z-index: 1;
+        }
+
+        /* --- CARD CONTAINER --- */
+        .s3-card-container {
+            padding: 0 16px;
+            display: flex; flex-direction: column; gap: 20px;
+        }
+
+        .s3-card {
+            border-radius: 32px;
+            background-color: #FFFFFF;
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 30px 20px;
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative; overflow: hidden;
+        }
+
+        .s3-card.active {
+            background-color: #E60026;
+            box-shadow: 0 20px 40px rgba(230, 0, 38, 0.3);
+            transform: scale(1.02);
+        }
+
+        .s3-sub {
+            font-family: var(--font-sans-reg); font-size: 13px; color: #888; margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+        .s3-card.active .s3-sub { color: rgba(255,255,255,0.8); }
+
+        .s3-title {
+            font-family: var(--font-sans); font-size: 28px; line-height: 1.2; color: #333; margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+        .s3-card.active .s3-title { color: #FFF; }
+
+        /* --- FIX LỖI CAROUSEL --- */
+        .s3-carousel {
+            display: flex;
+            gap: 12px;
+            
+            /* Bắt buộc thanh cuộn ngang xuất hiện */
+            overflow-x: auto; 
+            flex-wrap: nowrap; /* Không cho xuống dòng */
+            
+            scroll-snap-type: x mandatory;
+            padding-bottom: 10px; /* Chừa chỗ cho thao tác vuốt */
+            
+            /* Ẩn thanh cuộn nhưng vẫn vuốt được */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+        /* --- CAROUSEL (SLIDE KÉO NGANG) --- */
+        .s3-carousel {
+            display: flex; 
+            gap: 15px;
+            
+            /* Cấu hình cuộn ngang */
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory;
+            
+            /* Tăng trải nghiệm chạm lướt trên Mobile */
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            
+            /* Padding để không bị cắt bóng đổ */
+            padding-bottom: 20px; 
+            padding-right: 20px; 
+            
+            /* Con trỏ hiển thị dạng nắm tay để biết là kéo được */
+            cursor: grab; 
+            
+            /* Ẩn thanh cuộn */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+        /* --- CAROUSEL (Dùng Padding tạo viền) --- */
+        .s3-carousel {
+            display: flex; 
+            gap: 16px;
+            
+            overflow-x: auto; 
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            
+            /* Căn giữa màn hình */
+            padding: 0 30vw;
+            padding-bottom: 60px; /* Chừa chỗ cho Title */
+            
+            cursor: grab; 
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+            
+            align-items: center; 
+        }
+        .s3-carousel::-webkit-scrollbar { display: none; }
+        .s3-carousel.active { cursor: grabbing; scroll-snap-type: none; }
+
+        /* --- SLIDE ITEM (KHUNG TRẮNG) --- */
+        .s3-slide-item {
+            /* 1. Reset kích thước để khung bám theo ảnh */
+            flex: 0 0 auto !important;
+            width: auto !important; 
+            height: auto !important; /* Để ảnh quyết định chiều cao */
+            
+            /* 2. Dùng PADDING 6px để tạo viền trắng thay vì border */
+            /* Cách này giúp viền luôn đều tăm tắp và ôm sát ảnh */
+            padding: 6px !important; 
+            background-color: #FFFFFF !important;
+            
+            /* 3. Bo góc khung (8px) */
+            border-radius: 8px !important;
+            border: none !important; /* Tắt border cũ */
+            
+            /* 4. Bóng đổ */
+            box-shadow: 0 25px 25px -12px rgba(0, 0, 0, 0.25);
+            
+            position: relative;
+            scroll-snap-align: center;
+            overflow: visible !important;
+            box-sizing: content-box !important;
+        }
+
+        /* --- ẢNH BÊN TRONG --- */
+        .s3-slide-item img {
+            /* 1. Chiều cao CỐ ĐỊNH cho ảnh (240px - 12px viền = 228px) */
+            height: 228px !important; 
+            
+            /* 2. Chiều rộng TỰ ĐỘNG -> Ảnh co giãn đúng tỉ lệ, không bị méo */
+            width: auto !important; 
+            
+            /* 3. Hiển thị block để không có khoảng trắng thừa */
+            display: block !important;
+            
+            /* 4. Bo góc ảnh (8px khung - 6px viền = 2px) */
+            border-radius: 2px !important; 
+            
+            /* Tắt các thuộc tính gây nhiễu */
+            object-fit: unset !important;
+            max-width: unset !important;
+            min-width: unset !important;
+            
+            pointer-events: none; 
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        /* --- TITLE (Giữ nguyên) --- */
+        .s3-img-caption {
+            position: absolute;
+            bottom: -20px; 
+            left: 50%;
+            transform: translateX(-50%);
+            
+            display: inline-flex;
+            align-items: center; 
+            justify-content: center; 
+            height: 40px; 
+            padding: 9px 16px 7px 16px; 
+            
+            background-color: #FFFFFF;
+            border-radius: 1000px; 
+            
+            font-family: var(--font-sans);
+            font-weight: 700; 
+            font-size: 13px; 
+            color: #000000; 
+            
+            white-space: nowrap; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            z-index: 10;
+            
+            width: max-content;
+            max-width: unset; 
+        }
+        
+        
+        /* --- COMPARISON (Cho Card 2, 3) --- */
+        .s3-comparison {
+            display: flex; gap: 10px; justify-content: space-between; position: relative;
+        }
+        .s3-comparison img {
+            width: calc(50% - 5px); 
+            height: 180px; /* Cố định chiều cao */
+            border-radius: 12px; object-fit: cover;
+        }
+        
+        /* Tag nhỏ cho 2 ảnh so sánh */
+        .tag {
+            position: absolute; bottom: 8px; 
+            font-size: 10px; font-weight: 700;
+            background: #FFF; padding: 4px 10px; border-radius: 12px;
+            color: #000; pointer-events: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tag-left { left: 6px; }
+        .tag-right { right: 6px; }
+
+        .s3-note {
+            font-size: 11px; margin-top: 15px; color: #999; font-style: italic;
+            transition: color 0.3s;
+        }
+        .s3-card.active .s3-note { color: rgba(255,255,255,0.6); }
+    </style>
+</head>
+<body>
+
+    <section id="section-1">
+        <video autoplay muted loop playsinline class="video-background">
+            <source src="videos/page1_func_1.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        <div class="content-area">
+            <div class="text-group-top">
+                <h1 class="font-modern">Vẻ đẹp</h1>
+                <h1 class="font-classic">hồi sinh</h1>
+            </div>
+            <div class="text-group-bottom">
+                <h1 class="font-modern">từ sâu</h1>
+                <h1 class="font-classic">bên trong</h1>
+            </div>
+        </div>
+        <div class="footer-pill-container">
+            <a href="#" class="footer-pill">medicell.com.vn</a>
+        </div>
+    </section>
+
+    <div class="header-container">
+        <div class="top-row-wrapper">
+            <div class="logo-switch-container">
+                <img src="logos/mobile_small_white.svg" alt="M+" class="logo-small logo-white">
+                <img src="logos/mobile_small_red.svg" alt="M+" class="logo-small logo-red">
+            </div>
+            <a href="tel:0916887158" class="contact-wrapper">
+                <img src="images/contact_mobile.png" alt="Liên hệ ngay" class="contact-img">
+            </a>
+        </div>
+        <div class="logo-big-wrapper">
+            <img src="logos/mobile_big.svg" alt="Medicell Plus Premium" class="logo-big-img">
+        </div>
+    </div>
+
+    <section id="section-2">
+        <div class="s2-light-effect light-1"></div>
+        <div class="s2-light-effect light-2"></div>
+        <div class="s2-intro-text">Giới thiệu</div>
+
+        <div class="s2-product-container">
+            <div class="s2-marquee-container">
+                <div class="s2-marquee-text">
+                    Medicell Plus Premium Medicell Plus Premium Medicell Plus Premium
+                </div>
+            </div>
+            
+            <div class="s2-blur-circle"></div>
+            
+            <img src="images/section_2_product.png" alt="Medicell Vial" class="s2-product-img">
+        </div>
+
+        <div class="s2-title-container">
+            <div class="s2-title-bottom">
+                Dịch chiết<br>
+                nuôi cấy tế bào
+            </div>
+            <div class="s2-volume">5ml / 0.16 fl.oz.</div>
+        </div>
+    </section>
+    <section id="section-3">
+        <div class="s3-header">
+            <h2>Tái tạo <span style="font-family: 'FAIRE Octave Trial Variable'; font-style: italic;">vẻ đẹp</span></h2>
+            <p>từ tầng biểu bì thấp nhất cho</p>
+            <h3>hàng trăm<br>khách hàng</h3>
+            <img src="images/page3_product.png" class="s3-deco-product" alt="Product Small">
+        </div>
+
+        <div class="s3-card-container">
+            
+            <div class="s3-card" id="card-1">
+                <div class="s3-sub">Tái tạo da và giảm 36% ban đỏ*</div>
+                <div class="s3-title">Điều trị hiệu quả<br>sẹo vết thương<br>chưa lành</div>
+                
+                <div class="s3-carousel">
+                    <div class="s3-slide-item">
+                        <img src="images/page3_func1_1.png" alt="Before" draggable="false">
+                        <div class="s3-img-caption">Vết thương sâu ngày đầu</div>
+                    </div>
+                    <div class="s3-slide-item">
+                        <img src="images/page3_func1_2.png" alt="During" draggable="false">
+                        <div class="s3-img-caption">Sau 3 ngày sử dụng</div>
+                    </div>
+                    <div class="s3-slide-item">
+                        <img src="images/page3_func1_3.png" alt="After" draggable="false">
+                        <div class="s3-img-caption">Hồi phục hoàn toàn</div>
+                    </div>
+                </div>
+
+                <div class="s3-note">*Hiệu quả đo được sau 3-4 tuần thoa dịch chiết.</div>
+            </div>
+
+            <div class="s3-card" id="card-2">
+                <div class="s3-sub">Tái tạo da và giảm 36% ban đỏ*</div>
+                <div class="s3-title">Điều trị hiệu quả<br>sẹo do mụn, rỗ</div>
+                
+                <div class="s3-carousel">
+                    <div class="s3-slide-item">
+                        <img src="images/page3_func2_1.png" alt="Before" draggable="false">
+                        <div class="s3-img-caption">Tình trạng sẹo ngày đầu</div>
+                    </div>
+                    <div class="s3-slide-item">
+                        <img src="images/page3_func2_2.png" alt="After" draggable="false">
+                        <div class="s3-img-caption">Ngày 7 dùng Medicell</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="s3-card" id="card-3">
+                <div class="s3-sub">Chống oxi hoá và làm trắng da</div>
+                <div class="s3-title">Trẻ hoá, căng da<br>Làm mờ nếp nhăn</div>
+                
+                <div class="s3-carousel">
+                    <div class="s3-slide-item">
+                        <img src="images/page3_func3_1.png" alt="Before" draggable="false">
+                        <div class="s3-img-caption">Nếp nhăn vùng mắt ngày đầu</div>
+                    </div>
+                    <div class="s3-slide-item">
+                        <img src="images/page3_func3_2.png" alt="After" draggable="false">
+                        <div class="s3-img-caption">Ngày 7 dùng Medicell</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;">
+        <filter id="liquid-distortion" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+            
+            <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
+            
+            <feDisplacementMap in="blur" in2="noise" scale="60" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            const section2 = document.querySelector('#section-2');
+            
+            // 1. ANIMATE MODE
+            if (scrollPosition > 50) {
+                document.body.classList.add('animate-mode');
+            } else {
+                document.body.classList.remove('animate-mode');
+            }
+
+            // 2. SECTION 2 ACTIVE
+            const s2Rect = section2.getBoundingClientRect();
+            if (s2Rect.top <= 70) {
+                document.body.classList.add('section-2-active');
+            } else {
+                document.body.classList.remove('section-2-active');
+            }
+        });
+
+        // --- LOGIC SECTION 3: KÉO TỚI ĐÂU ĐỎ TỚI ĐÓ ---
+        let cardOptions = {
+            root: null,
+            rootMargin: '-20% 0px -20% 0px', // Kích hoạt khi phần tử vào giữa màn hình
+            threshold: 0.4 // Cần ít nhất 40% thẻ hiển thị để kích hoạt
+        };
+
+        let cardObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                // Nếu thẻ đang trong vùng nhìn thấy
+                if (entry.isIntersecting) {
+                    // Thêm class active (đỏ)
+                    entry.target.classList.add('active');
+                } else {
+                    // Nếu cuộn qua rồi hoặc chưa tới thì bỏ active (trắng)
+                    entry.target.classList.remove('active');
+                }
+            });
+        }, cardOptions);
+
+        // Áp dụng observer cho tất cả các thẻ .s3-card
+        document.querySelectorAll('.s3-card').forEach(card => {
+            cardObserver.observe(card);
+        });
+        // ... (Code IntersectionObserver giữ nguyên) ...
+
+        // --- DRAG TO SCROLL (SLIDE KÉO THẢ) ---
+        // --- DRAG TO SCROLL (ÁP DỤNG CHO TẤT CẢ CÁC SLIDE) ---
+        const sliders = document.querySelectorAll('.s3-carousel'); // Lấy tất cả slide
+
+        sliders.forEach(slider => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('active'); // Tắt snap
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            const stopDragging = () => {
+                if(!isDown) return;
+                isDown = false;
+                slider.classList.remove('active'); // Bật lại snap
+            };
+
+            slider.addEventListener('mouseleave', stopDragging);
+            slider.addEventListener('mouseup', stopDragging);
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 1.5; // Tốc độ kéo
+                slider.scrollLeft = scrollLeft - walk;
+            });
+        });
+    </script>
+</body>
+</html>

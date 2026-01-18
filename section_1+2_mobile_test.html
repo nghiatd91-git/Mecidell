@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Medicell Plus Premium</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- KHAI BÁO FONT --- */
+        @font-face {
+            font-family: 'Matter-TRIAL';
+            src: url('Fonts/Matter/Matter-TRIAL-SemiBold.otf') format('opentype');
+            font-weight: 670;
+        }
+        @font-face {
+            font-family: 'Matter-TRIAL-Regular';
+            src: url('Fonts/Matter/Matter-TRIAL-Regular.otf') format('opentype');
+            font-weight: 430;
+        }
+        @font-face {
+            font-family: 'FAIRE Octave Trial Variable';
+            src: url('Fonts/FAIRE Octave/FAIREOctaveTrialVariable.ttf') format('truetype');
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        :root {
+            --text-color: #FAF5F6;
+            --text-dark: #333333;
+            --font-sans: 'Matter-TRIAL', sans-serif;
+            --font-sans-reg: 'Matter-TRIAL-Regular', sans-serif;
+            --font-serif: 'FAIRE Octave Trial Variable', serif;
+            --bg-pink: #FFF0F5; 
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 100%; 
+            min-height: 100vh;
+            color: var(--text-color); 
+            font-family: var(--font-sans); 
+            position: relative;
+        }
+
+        section {
+            width: 100%; height: 100vh; position: relative; overflow: hidden; 
+        }
+
+        /* --- HEADER --- */
+        .header-container {
+            width: 100%; position: fixed; top: 0; left: 0;
+            height: 160px; 
+            padding: 20px 24px 10px 24px;
+            display: flex; flex-direction: column; justify-content: space-between; 
+            z-index: 100; 
+            transition: height 3.0s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden; pointer-events: none; 
+        }
+        .header-container * { pointer-events: auto; }
+
+        body.animate-mode .header-container { height: 70px; }
+
+        .top-row-wrapper {
+            display: flex; align-items: center; width: 100%; height: 40px; position: relative;
+        }
+
+        /* --- LOGO NHỎ --- */
+        .logo-switch-container {
+            position: absolute; left: 0; top: 0;
+            width: 77px; height: 40px; 
+            opacity: 0; transform: scale(0.8);
+            transition: opacity 0.5s ease, transform 0.5s ease; 
+        }
+
+        body.animate-mode .logo-switch-container { 
+            opacity: 1; transform: scale(1);
+            transition: opacity 1.0s ease, transform 1.0s ease; 
+        }
+
+        body.section-2-active .logo-switch-container {
+            opacity: 1; transform: scale(1); transition-delay: 0s; 
+        }
+
+        .logo-small {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            transition: opacity 1s ease-in-out;
+        }
+        .logo-white { opacity: 1; z-index: 2; } 
+        .logo-red { opacity: 0; z-index: 1; }
+
+        body.section-2-active .logo-white { opacity: 0; }
+        body.section-2-active .logo-red { opacity: 1; }
+
+        .contact-wrapper { margin-left: auto; display: block; }
+        .contact-img { width: 228px; height: 40px; display: block; }
+
+        /* --- LOGO LỚN --- */
+        .logo-big-wrapper {
+            display: flex; justify-content: center; width: 100%; height: auto;
+            opacity: 1; transform: translate(0, 0) scale(1);
+            transform-origin: top left; transition: all 0.5s ease;
+        }
+        .logo-big-img { width: 100%; height: auto; display: block; }
+        
+        @keyframes logoMoveUpThenLeft {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            30% { transform: translate(0, -115px) scale(0.7); opacity: 1; } 
+            90% { transform: translate(-135px, -115px) scale(0.23); opacity: 1; } 
+            100% { transform: translate(-135px, -115px) scale(0.23); opacity: 0; } 
+        }
+
+        body.animate-mode .logo-big-wrapper {
+            animation: logoMoveUpThenLeft 3.0s forwards; transition: none;
+        }
+        body.section-2-active .logo-big-wrapper {
+            opacity: 0; pointer-events: none;
+        }
+
+        /* --- SECTION 1 --- */
+        #section-1 {
+            display: flex; flex-direction: column; padding-top: 160px; z-index: 10;
+        }
+        .video-background {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -2;
+        }
+        .video-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); z-index: -1; pointer-events: none;
+        }
+        .content-area {
+            flex: 1; padding: 0 24px; display: flex; flex-direction: column; justify-content: flex-start; 
+        }
+        .text-group-top {
+            text-align: left; margin-top: 30px; transition: margin-top 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        body.animate-mode .text-group-top { 
+            margin-top: 80px; transition: margin-top 3.0s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .text-group-bottom {
+            text-align: right; display: flex; flex-direction: column;
+            align-items: flex-end; margin-top: auto; margin-bottom: 120px; 
+        }
+        h1 { margin: 0; }
+        .font-modern {
+            font-family: var(--font-sans); font-weight: 800; font-size: 48px; 
+            line-height: 100%; letter-spacing: -0.01em; margin-bottom: 5px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .font-classic {
+            font-family: var(--font-serif); font-weight: 400; font-style: italic; 
+            font-size: 64px; line-height: 100%; letter-spacing: -0.01em; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+  
+        /* --- SECTION 2 --- */
+        #section-2 {
+            z-index: 20;
+            background-color: #FAF5F6; 
+            background-image: linear-gradient(0deg, rgba(230, 0, 38, 0.1), rgba(230, 0, 38, 0.1));
+        }
+
+        .s2-intro-text {
+            position: absolute; top: 22%; left: 50%; transform: translateX(-50%);
+            width: 92px; height: 24px; font-family: var(--font-sans-reg);
+            color: rgba(24, 1, 3, 0.75); font-size: 24px; line-height: 24px;
+            text-align: center; white-space: nowrap; z-index: 4; margin: 0;
+        }
+
+        .s2-product-container {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 100%; height: auto;
+            display: flex; justify-content: center; align-items: center; z-index: 2;
+        }
+        .s2-product-img {
+            width: 170px; height: auto; position: relative; z-index: 3;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.15));
+        }
+
+        /* --- HIỆU ỨNG GLASS BUBBLE (Update từ file demo) --- */
+        .s2-blur-circle {
+            position: absolute; width: 378px; height: 378px;
+            border-radius: 50%;
+            z-index: 2; 
+            
+            /* Style giống file demo: Nền mờ nhẹ, border trong suốt */
+            background: rgba(255, 255, 255, 0.08); 
+            border: 2px solid transparent;
+            /* Box shadow tạo viền sáng mạnh và bóng đổ */
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.6), 0 16px 32px rgba(0,0,0,0.12);
+            
+            /* Áp dụng SVG Filter Distortion */
+            backdrop-filter: url(#liquid-distortion);
+            -webkit-backdrop-filter: url(#liquid-distortion);
+        }
+
+        .s2-marquee-container {
+            position: absolute; top: 50%; left: 0; transform: translateY(-50%); width: 100%;
+            overflow: hidden; z-index: 1; white-space: nowrap;
+        }
+        .s2-marquee-text {
+            display: inline-block; font-family: 'FAIRE Octave Trial Variable', serif; 
+            font-weight: 300; font-style: italic; font-size: 128px;
+            color: rgba(24, 1, 3, 0.75); 
+            padding-left: 100%;
+            animation: marquee 30s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+        /* --- HIỆU ỨNG VỆT SÁNG NỀN (LIGHT STREAKS) --- */
+        .s2-light-effect {
+            position: absolute;
+            background-color: #FAF5F6;
+            
+            /* Thông số quan trọng từ thiết kế */
+            opacity: 0.1; /* Giảm xuống 10% để không che mất nền */
+            mix-blend-mode: plus-lighter;
+            filter: blur(128px);
+            
+            pointer-events: none;
+            z-index: 0;
+            
+            /* Xoay từ góc trái trên để bám theo tia dọc định vị (57px) */
+            transform-origin: top left;
+        }
+
+        .light-1 {
+            /* Thông số Light 1 */
+            width: 345px;
+            height: 873px;
+            top: 1px;
+            left: 57px; /* Bám theo tia dọc */
+            
+            /* Xoay -25 độ để tạo hướng chéo \ (Trên-Trái xuống Dưới-Phải) khớp với tia đỏ */
+            transform: rotate(-25deg); 
+        }
+
+        .light-2 {
+            /* Thông số Light 2 */
+            width: 223px;
+            height: 603px;
+            top: 271px;
+            left: 57px; /* Bám theo tia dọc (thẳng hàng với Light 1) */
+            transform: rotate(-25deg);
+        }
+        .s2-title-container {
+            position: absolute; top: 76%; width: 100%; text-align: center; z-index: 4;
+        }
+        .s2-title-bottom {
+            font-family: var(--font-sans-reg);font-weight: 430; font-size: 36px; color: #180103; line-height: 1.1;
+        }
+        .s2-volume {
+            margin-top: 10px; font-family: var(--font-sans-reg); font-size: 14px; color: rgba(24, 1, 3, 0.5); ;
+        }
+
+        
+    </style>
+</head>
+<body>
+
+    <section id="section-1">
+        <video autoplay muted loop playsinline class="video-background">
+            <source src="videos/page1_func_1.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        <div class="content-area">
+            <div class="text-group-top">
+                <h1 class="font-modern">Vẻ đẹp</h1>
+                <h1 class="font-classic">hồi sinh</h1>
+            </div>
+            <div class="text-group-bottom">
+                <h1 class="font-modern">từ sâu</h1>
+                <h1 class="font-classic">bên trong</h1>
+            </div>
+        </div>
+        
+    </section>
+
+    <div class="header-container">
+        <div class="top-row-wrapper">
+            <div class="logo-switch-container">
+                <img src="logos/mobile_small_white.svg" alt="M+" class="logo-small logo-white">
+                <img src="logos/mobile_small_red.svg" alt="M+" class="logo-small logo-red">
+            </div>
+            <a href="tel:0916887158" class="contact-wrapper">
+                <img src="images/contact_mobile.png" alt="Liên hệ ngay" class="contact-img">
+            </a>
+        </div>
+        <div class="logo-big-wrapper">
+            <img src="logos/mobile_big.svg" alt="Medicell Plus Premium" class="logo-big-img">
+        </div>
+    </div>
+
+    <section id="section-2">
+        <div class="s2-light-effect light-1"></div>
+        <div class="s2-light-effect light-2"></div>
+        <div class="s2-intro-text">Giới thiệu</div>
+
+        <div class="s2-product-container">
+            <div class="s2-marquee-container">
+                <div class="s2-marquee-text">
+                    Medicell Plus Premium Medicell Plus Premium Medicell Plus Premium
+                </div>
+            </div>
+            
+            <div class="s2-blur-circle"></div>
+            
+            <img src="images/section_2_product.png" alt="Medicell Vial" class="s2-product-img">
+        </div>
+
+        <div class="s2-title-container">
+            <div class="s2-title-bottom">
+                Dịch chiết<br>
+                nuôi cấy tế bào
+            </div>
+            <div class="s2-volume">5ml / 0.16 fl.oz.</div>
+        </div>
+    </section>
+    
+
+    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;">
+        <filter id="liquid-distortion" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+            
+            <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" result="noise" />
+            
+            <feDisplacementMap in="blur" in2="noise" scale="60" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            const section2 = document.querySelector('#section-2');
+            
+            // 1. ANIMATE MODE
+            if (scrollPosition > 50) {
+                document.body.classList.add('animate-mode');
+            } else {
+                document.body.classList.remove('animate-mode');
+            }
+
+            // 2. SECTION 2 ACTIVE
+            const s2Rect = section2.getBoundingClientRect();
+            if (s2Rect.top <= 70) {
+                document.body.classList.add('section-2-active');
+            } else {
+                document.body.classList.remove('section-2-active');
+            }
+        });
+
+       
+    </script>
+</body>
+</html>

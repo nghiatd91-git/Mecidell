@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicell Plus Premium - Vẻ Đẹp Hồi Sinh</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. CORE SETTINGS & RESET
+           ========================================= */
+        :root {
+            --primary-red: #D32F2F;
+            --light-bg: #FFF5F7;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Manrope', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            height: 100%;
+            overflow-y: scroll;
+        }
+
+        body { 
+            font-family: var(--font-sans); color: #1a1a1a; line-height: 1.5; 
+            height: 100%; margin: 0;
+        }
+
+        img { max-width: 100%; height: auto; display: block; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        section, footer {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            min-height: 100vh;
+            position: relative;
+            padding: 80px 0;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+
+        /* Container chuẩn */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* =========================================
+           2. HEADER (DESKTOP)
+           ========================================= */
+        .main-header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            padding: 25px 0; /* Dày dặn hơn */
+            background: transparent; 
+            transition: all 0.3s ease;
+        }
+
+        .header-layout { 
+            display: flex; justify-content: space-between; align-items: center; 
+            position: relative;
+            max-width: 96% !important; /* Mở rộng khung để tránh đè logo */
+            width: 100%;
+            padding: 0 30px;
+        }
+
+        /* Ẩn Header khi cuộn xuống Footer */
+        .main-header.header-hidden {
+            transform: translateY(-100%); opacity: 0; pointer-events: none;
+        }
+
+        /* --- LEFT NAV --- */
+        .left-nav ul { display: flex; gap: 30px; list-style: none; }
+        .left-nav a { 
+            color: #ffffff; font-weight: 800; font-size: 1.4rem; /* Chữ to rõ */
+            text-transform: uppercase; white-space: nowrap;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5); transition: all 0.3s;
+        }
+        .left-nav a:hover { color: #ffebee; }
+
+        /* --- CENTER LOGO (LOGIC ẢNH) --- */
+        .center-logo { 
+            position: absolute; left: 50%; transform: translateX(-50%);
+            transition: opacity 0.3s ease; opacity: 1; 
+        }
+        .center-logo.hidden { opacity: 0; pointer-events: none; }
+
+        .header-logo-desktop {
+            height: 52px; width: auto; 
+            transition: opacity 0.3s ease; display: none; /* Mặc định ẩn để JS xử lý */
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+        }
+        
+        /* Logo Mobile mặc định ẩn trên Desktop */
+        .mobile-logo-img { display: none; }
+        
+        /* Ẩn logo vẽ bằng CSS cũ */
+        .logo-pill { display: none !important; }
+
+        /* --- RIGHT CTA (BUTTON) --- */
+        .btn-header-contact {
+            background-color: var(--primary-red); color: white; 
+            padding: 15px 35px; border-radius: 50px;
+            font-weight: 700; font-size: 1.4rem; 
+            border: 1px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        }
+
+        /* --- HEADER THEME MODES --- */
+        /* 1. Mặc định & Red Style: Logo Đỏ */
+        .main-header .logo-red { display: block; }
+        .main-header .logo-white { display: none; }
+        .main-header.red-style .logo-red { display: block; }
+        .main-header.red-style .logo-white { display: none; }
+        
+        /* 2. Video Mode & Dark Text Mode: Logo Trắng */
+        .main-header.video-mode .logo-red, 
+        .main-header.dark-text-mode .logo-red { display: none; }
+        
+        .main-header.video-mode .logo-white, 
+        .main-header.dark-text-mode .logo-white { display: block; }
+
+        /* Màu chữ Menu theo Theme */
+        .main-header.dark-text-mode .left-nav a { color: #8b0000; text-shadow: none; }
+        .main-header.red-style .left-nav a { color: #4a3b3b; text-shadow: none; }
+        .main-header.video-mode .left-nav a { color: #ffffff; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+
+        /* Style nút liên hệ theo Theme */
+        .main-header.dark-text-mode .btn-header-contact { border: 1px solid transparent; box-shadow: 0 4px 10px rgba(211,47,47,0.2); }
+        .main-header.red-style .btn-header-contact { background-color: #D32F2F; border: none; }
+
+
+        /* =========================================
+           3. SECTION: HERO (TRANG 1)
+           ========================================= */
+        .hero {
+            padding: 0; color: white; overflow: hidden;
+            background-color: #856060;
+        }
+        .bg-video-hero {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 0;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.2) 100%);
+            z-index: 1; pointer-events: none;
+        }
+        .hero-content {
+            position: relative; z-index: 2; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        /* Logo To Trang 1 */
+        .hero-big-logo {
+            background: transparent !important; box-shadow: none !important;
+            padding: 0 !important; border-radius: 0 !important;
+            display: flex; justify-content: center;
+            width: 100%; max-width: 1000px; 
+            margin: 0 auto 80px auto;
+        }
+        .img-logo-big-mobile {
+            width: 100%; height: auto; display: block;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        /* Typography Trang 1 */
+        .hero-text-group { 
+            width: 100%; max-width: 1200px; 
+            display: flex; justify-content: space-between; align-items: flex-end; 
+            padding: 0 20px; margin-top: 20px;
+        }
+        .line-sans {
+            font-family: var(--font-sans); font-weight: 700; font-size: 3rem; 
+            margin-bottom: 5px; line-height: 1.2; opacity: 0.95;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .line-serif {
+            font-family: var(--font-serif); font-weight: 400; font-style: italic; 
+            font-size: 6rem; line-height: 1; letter-spacing: -1px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* =========================================
+           4. SECTION: INTRO
+           ========================================= */
+        .product-intro {
+            background: radial-gradient(ellipse at 50% 40%, #FFFFFF 0%, #fff0f5 40%, #e3d1d4 100%);
+            overflow: hidden;
+        }
+        /* Chữ chạy nền */
+        .bg-text-wrapper { 
+            position: absolute; top: 50%; left: 0; width: 100%; 
+            transform: translateY(-50%); pointer-events: none; 
+            overflow: hidden; white-space: nowrap; display: flex;
+        }
+        .big-serif-text { 
+            font-family: var(--font-serif); font-size: 13vw; color: rgba(60, 30, 30, 0.08); 
+            font-style: italic; font-weight: 500; letter-spacing: -2px;
+            display: inline-block; padding-left: 50px;
+            animation: textScroll 60s linear infinite;
+        }
+        @keyframes textScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        .intro-content { text-align: center; position: relative; z-index: 5; }
+        .intro-label { font-size: 1.8rem; color: #4a3b3b; margin-bottom: 30px; font-weight: 500; }
+        
+        .bottle-showcase { 
+            position: relative; margin: 20px auto 40px; width: 500px; height: 500px; 
+            display: flex; justify-content: center; align-items: center; 
+        }
+        .main-bottle { position: relative; z-index: 2; height: 380px; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+        
+        .water-sphere { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 500px; height: 500px; border-radius: 50%; z-index: 1; 
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 40%, rgba(255, 255, 255, 0) 70%); 
+            box-shadow: inset 10px 10px 20px rgba(255, 255, 255, 0.3), inset -10px -10px 20px rgba(255, 255, 255, 0.1), 0 15px 35px rgba(0, 0, 0, 0.05); 
+            backdrop-filter: blur(3px); 
+        }
+        .glow-circle { position: absolute; width: 450px; height: 450px; background: radial-gradient(circle, rgba(255,255,255,0.9) 20%, rgba(255,255,255,0) 70%); border-radius: 50%; z-index: -1; filter: blur(10px); }
+        .product-title-large { font-size: 3rem; font-weight: 500; color: #2a0a0a; margin-bottom: 10px; letter-spacing: -1px; }
+
+        /* Tia sáng trang trí */
+        .light-flare-left, .light-flare-right, .light-flare-center {
+            position: absolute; left: 50%; width: 300vw; height: 200px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+            mix-blend-mode: screen; filter: blur(20px); opacity: 0.8; pointer-events: none; z-index: 10;
+        }
+        .light-flare-left { top: -250px; transform: translate(-50%, -50%) rotate(30deg); }
+        .light-flare-right { top: 750px; transform: translate(-50%, -50%) rotate(30deg); }
+
+
+        /* =========================================
+           5. SECTION: BENEFITS (TÁC DỤNG)
+           ========================================= */
+        .benefits-section { background-color: #ffffff; padding-top: 120px; justify-content: flex-start; height: auto; min-height: 100vh; }
+        .benefits-layout { display: flex; align-items: flex-start; gap: 50px; }
+        .benefits-sidebar { width: 35%; position: sticky; top: 150px; }
+        .benefits-title-main { font-family: var(--font-serif); font-size: 4rem; line-height: 1.1; color: #333; font-style: italic; margin-bottom: 15px; }
+        .benefits-title-highlight { color: var(--primary-red); display: block; }
+        .benefits-desc { font-size: 1.1rem; color: #666; margin-bottom: 5px; }
+        .benefits-subtitle { font-family: var(--font-sans); font-size: 2.5rem; font-weight: 700; color: #333; line-height: 1.2; margin-bottom: 30px; }
+        .sidebar-bottle { height: 250px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1)); }
+        
+        .benefits-list { width: 65%; display: flex; flex-direction: column; gap: 60px; padding-bottom: 100px; }
+        .benefit-scroll-card { border-radius: 20px; padding: 40px; background-color: #F9F9F9; border: 1px solid #eee; transition: all 0.5s ease-in-out; opacity: 0.6; transform: scale(0.98); }
+        .benefit-scroll-card.active { background-color: var(--primary-red); border-color: var(--primary-red); opacity: 1; transform: scale(1); box-shadow: 0 20px 40px rgba(211, 47, 47, 0.2); }
+        .benefit-scroll-card.active .b-tag { color: rgba(255,255,255,0.8); }
+        .benefit-scroll-card.active .b-title { color: #ffffff; }
+        
+        .card-top-info { margin-bottom: 20px; }
+        .b-tag { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; color: #888; transition: 0.5s; }
+        .b-title { font-size: 2rem; font-weight: 700; line-height: 1.3; color: #333; transition: 0.5s; }
+        
+        .compare-grid { display: flex; gap: 20px; }
+        .compare-item { flex: 1; position: relative; }
+        .compare-item img { width: 100%; border-radius: 10px; height: 200px; object-fit: cover; border: 4px solid white; }
+        .compare-label { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.1); white-space: nowrap; }
+
+
+        /* =========================================
+           6. SECTION: INGREDIENTS (THÀNH PHẦN)
+           ========================================= */
+        .ingredients { 
+            background: radial-gradient(ellipse at 50% 40%, #FFFFFF 0%, #fff0f5 40%, #e3d1d4 100%);
+            overflow: hidden; padding-bottom: 60px; z-index: 1;
+        }
+        .section-title-center { 
+            text-align: center; font-size: 3rem; color: #555555; margin-bottom: 30px; font-weight: 500; position: relative; z-index: 10;
+        }
+        .ingredients-layout-art { 
+            position: relative; width: 100vw; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; 
+            height: 550px; display: flex; justify-content: center; align-items: center; z-index: 10;
+        }
+        .center-art { z-index: 5; width: 700px; display: flex; justify-content: center; align-items: center; }
+        .art-img { width: 100%; height: auto; filter: drop-shadow(0 25px 40px rgba(0,0,0,0.2)); }
+
+        .art-bubble { 
+            position: absolute; width: 220px; height: 220px; 
+            background: rgba(255, 255, 255, 0.45); border-radius: 50%; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            box-shadow: inset 0 0 30px rgba(255,255,255,0.9), 10px 15px 30px rgba(0,0,0,0.05); 
+            backdrop-filter: blur(4px); z-index: 6; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            cursor: pointer; padding: 20px;
+        }
+        .bubble-content { font-family: var(--font-serif); font-size: 2.8rem; color: #4a3b3b; font-style: italic; font-weight: 400; }
+        .bubble-desc-short { display: none; font-family: var(--font-sans); font-size: 0.9rem; color: #ffffff; margin-top: 5px; font-weight: 500; animation: fadeInUp 0.3s ease; }
+
+        .art-bubble:hover {
+            background-color: #C62828; transform: scale(1.1); 
+            box-shadow: 0 15px 30px rgba(198, 40, 40, 0.4); z-index: 10; border: 2px solid rgba(255,255,255,0.2);
+        }
+        .art-bubble:hover .bubble-content { color: #ffffff; }
+        .art-bubble:hover .bubble-desc-short { display: block; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Vị trí bong bóng */
+        .pos-top-left { top: 5%; left: 15%; } 
+        .pos-top-right { top: 5%; right: 15%; } 
+        .pos-bottom-left { bottom: 5%; left: 15% } 
+        .pos-bottom-right { bottom: 5%; right: 15%; }
+
+        /* --- MODAL POPUP --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000;
+            display: none; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); pointer-events: auto; 
+        }
+        .modal-overlay.open { display: flex; animation: fadeIn 0.3s ease; }
+        
+        .modal-card {
+            position: relative; background-color: #FFF5F7; width: 480px; max-width: 90%;
+            max-height: 80vh; overflow-y: auto; overflow-x: hidden;
+            border-radius: 30px; padding: 40px 20px 40px 40px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3); transform: scale(0.9); transition: transform 0.3s;
+        }
+        .modal-overlay.open .modal-card { transform: scale(1); }
+
+        /* Scrollbar Popup */
+        .modal-card::-webkit-scrollbar { width: 6px; }
+        .modal-card::-webkit-scrollbar-track { background: transparent; margin: 30px 0; }
+        .modal-card::-webkit-scrollbar-thumb { background: #D32F2F; border-radius: 10px; }
+
+        .btn-close-modal {
+            position: absolute; top: 25px; right: 25px; z-index: 50;
+            font-weight: 800; font-size: 0.8rem; color: #999; cursor: pointer; 
+            background: #fff; border: 1px solid #eee; padding: 8px 16px; border-radius: 20px;
+        }
+        .btn-close-modal:hover { color: #D32F2F; border-color: #D32F2F; background: #fff0f0; }
+
+        .modal-title { font-family: var(--font-serif); font-size: 4rem; font-style: italic; margin-bottom: 20px; line-height: 1; margin-top: 0; }
+        .modal-img-wrapper { width: 100%; height: 220px; border-radius: 20px; overflow: hidden; margin-bottom: 25px; background: #fff; flex-shrink: 0; margin-right: 15px; }
+        .modal-img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-section-title { color: #D30000; font-weight: 800; font-size: 1.1rem; margin: 25px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .modal-text { font-size: 1rem; color: #444; line-height: 1.6; margin-bottom: 5px; text-align: justify; padding-right: 15px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+
+        /* =========================================
+           7. SECTION: TECHNOLOGY (CÔNG NGHỆ)
+           ========================================= */
+        .technology { 
+            background-color: #000; overflow: hidden; color: white; text-align: center; 
+        }
+        .bg-video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
+        }
+        .tech-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: radial-gradient(circle, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.6) 90%); z-index: 1;
+        }
+        .tech-content-wrapper { 
+            position: relative; z-index: 10 !important; width: 100%; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+        }
+        .tech-header { margin-bottom: 80px; margin-top: -50px; }
+        .tech-subtitle { 
+            font-size: 2.5rem; font-weight: 600; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); 
+        }
+        .tech-title-main { 
+            font-family: var(--font-serif); font-size: 11rem; font-style: italic; line-height: 1; margin-bottom: 60px; 
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .tech-features-grid { 
+            display: flex; justify-content: space-between; align-items: flex-start;
+            width: 100%; max-width: 1600px; padding: 0 50px; 
+        }
+        .tech-feature-item { flex: 1; max-width: 350px; text-align: center; }
+        .tech-feature-item p { font-size: 1.2rem; line-height: 1.6; font-weight: 500; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+
+
+        /* =========================================
+           8. SECTION: REPORT (BÁO CÁO)
+           ========================================= */
+        .report-section {
+            background: radial-gradient(ellipse at 50% 40%, #FFFFFF 0%, #fff0f5 40%, #e3d1d4 100%);
+            padding: 80px 0; overflow: hidden;
+        }
+        .report-flare-common {
+            position: absolute; left: 50%; width: 300vw; height: 200px;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0) 100%);
+            mix-blend-mode: screen; filter: blur(35px); opacity: 0.8; pointer-events: none; z-index: 0;
+        }
+        .report-flare-top { top: -10%; transform: translate(-50%, 0) rotate(25deg); }
+        .report-flare-bottom { bottom: 5%; transform: translate(-50%, 0) rotate(25deg); }
+
+        .report-grid { display: flex; align-items: center; justify-content: space-between; position: relative; }
+        
+        .report-content-left { width: 55%; padding-right: 20px; position: relative; z-index: 10; }
+        .report-title-main { font-family: var(--font-serif); font-size: 6rem; font-style: italic; color: #1a0505; line-height: 1.1; margin-bottom: 25px; white-space: nowrap; text-shadow: 2px 2px 0px rgba(255,255,255,0.6); }
+        .report-desc { font-size: 2rem; font-weight: 700; color: #2a0a0a; margin-bottom: 40px; line-height: 1.3; max-width: 90%; }
+        
+        .btn-report {
+            background-color: #ff0022; color: white; padding: 18px 55px; border-radius: 50px;
+            font-weight: 700; font-size: 1.2rem; border: none; cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 0, 34, 0.3); transition: all 0.3s;
+        }
+        .btn-report:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 0, 34, 0.4); }
+        
+        .report-author-box { margin-top: 80px; }
+        .author-label { font-weight: 800; font-size: 1.4rem; color: #000; margin-bottom: 5px; }
+        .author-name { font-weight: 500; font-size: 1.2rem; color: #555; }
+
+        .report-visual-right { width: 50%; position: relative; display: flex; justify-content: flex-end; align-items: center; margin-left: -100px; z-index: 1; }
+        .doctor-circle-mask { width: 700px; height: 700px; border-radius: 50%; overflow: hidden; position: relative; margin-right: -100px; background-color: #ffeef2; box-shadow: -20px 0 50px rgba(0,0,0,0.05); }
+        .doctor-img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2) hue-rotate(310deg) saturate(1.1); }
+        
+        .floating-bottle-report {
+            position: absolute; width: 350px; height: auto; bottom: -10px; left: -150px;   
+            transform: rotate(-5deg); filter: drop-shadow(15px 20px 40px rgba(0,0,0,0.3)); z-index: 20; 
+            animation: floatBottleFixed 5s ease-in-out infinite;
+        }
+        @keyframes floatBottleFixed { 0%, 100% { transform: rotate(-5deg) translateY(0); } 50% { transform: rotate(-5deg) translateY(-15px); } }
+        /* --- CSS RIÊNG CHO POPUP BÁO CÁO (RỘNG HƠN) --- */
+        .report-card-wide {
+            width: 800px !important; /* Rộng hơn popup thường (480px) */
+            max-width: 95% !important;
+        }
+        
+        .report-content-body {
+            padding-top: 10px;
+        }
+        
+        /* Chỉnh lại nút đóng cho popup này */
+        #reportModal .btn-close-modal {
+            top: 20px; right: 20px;
+            background-color: #eee;
+        }
+        #reportModal .btn-close-modal:hover {
+            background-color: #D32F2F; color: #fff;
+        }
+
+        /* =========================================
+           9. SECTION: TARGET AUDIENCE (DÀNH CHO)
+           ========================================= */
+        .target-audience { 
+            background: radial-gradient(ellipse at 50% 40%, #FFFFFF 0%, #fff0f5 40%, #e3d1d4 100%);
+            padding: 100px 0; overflow: hidden;
+        }
+        .target-layout { 
+            display: flex; align-items: center; justify-content: space-between; 
+            width: 115%; margin-left: -7.5%; /* Kỹ thuật mở rộng khung */
+        }
+        .target-info { width: 45%; padding-left: 20px; z-index: 10; text-align: left; }
+        
+        .target-title { 
+            font-family: var(--font-serif); font-size: 6rem; font-style: italic; color: #4a3b3b; 
+            margin-bottom: 25px; line-height: 1; transform: translateX(-5px); white-space: nowrap; 
+        }
+        .target-tabs { display: flex; gap: 30px; align-items: baseline; margin-bottom: 30px; white-space: nowrap; }
+        .tab-item { font-size: 1.6rem; cursor: pointer; transition: 0.3s; }
+        .tab-item.active { color: #E50914; font-weight: 800; }
+        .tab-item.inactive { color: #555; font-weight: 600; }
+        
+        .target-divider { width: 100%; height: 1px; background-color: #e0e0e0; margin-bottom: 30px; }
+        .target-desc { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; }
+        .target-list { list-style: none; padding-left: 0; margin-bottom: 50px; }
+        .target-list li {
+            position: relative; padding-left: 30px; margin-bottom: 15px; font-size: 1.35rem; font-weight: 700; white-space: nowrap;
+        }
+        .target-list li::before { content: ''; position: absolute; left: 0; top: 11px; width: 7px; height: 7px; background-color: #000; border-radius: 50%; }
+
+        .cta-heading {
+            font-family: var(--font-serif); font-style: italic; font-size: 3.5rem; color: #4a3b3b; 
+            margin-bottom: 25px; line-height: 1.2; transform: translateX(-3px); white-space: nowrap !important;
+        }
+        .btn-target-contact {
+            display: inline-block; background-color: #FF0033; color: white; padding: 18px 50px; 
+            border-radius: 50px; font-weight: 700; font-size: 1.1rem; 
+            box-shadow: 0 10px 20px rgba(255, 0, 51, 0.2); transition: transform 0.3s; white-space: nowrap;
+        }
+        .btn-target-contact:hover { transform: translateY(-3px); }
+
+        .target-visual { 
+            width: 55%; position: relative; height: 600px; display: flex; justify-content: center; align-items: flex-end; 
+            overflow: visible; padding-right: 20px;
+        }
+        .visual-composition {
+            position: relative; width: 135%; max-width: 850px; margin-right: -15%; margin-bottom: -40px; 
+            display: flex; justify-content: center;
+        }
+        .visual-bg { width: 100%; height: auto; position: relative; z-index: 1; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.1)); }
+        .visual-bottle {
+            position: absolute; z-index: 10; left: 50%; transform: translateX(-50%);
+            width: 20%; bottom: 31%; height: auto; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));
+        }
+
+
+        /* =========================================
+           10. FOOTER (CLEAN VERSION)
+           ========================================= */
+        .footer-section { 
+            background-color: #0f0505; 
+            /* Tăng padding để tạo khoảng cách thoáng với nội dung trên */
+            padding: 100px 0 80px; 
+            color: #ffffff; 
+        }
+        
+        /* Cấu hình Container Footer rộng tối đa */
+        .footer-section .container {
+            width: 100% !important; 
+            max-width: 1600px !important; 
+            margin: 0 auto !important;
+            padding-left: 40px !important; 
+            padding-right: 40px !important;
+        }
+
+        /* --- Footer Banner Logo (Ảnh) --- */
+        .footer-banner-row {
+            display: block !important; 
+            width: 100% !important; 
+            text-align: center !important; 
+            margin-bottom: 60px !important; /* Khoảng cách với thông tin dưới */
+        }
+        
+        .footer-brand-img {
+            /* Ép ảnh to hết cỡ container, đảm bảo độ nét */
+            width: 100% !important; 
+            height: auto !important;
+            display: inline-block !important; 
+            
+            /* Bóng đổ nhẹ tạo khối 3D */
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
+        }
+
+        /* --- Footer Bottom Info --- */
+        .footer-bottom-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; 
+            padding-top: 20px;
+        }
+
+        /* Cột trái (Copyright) */
+        .footer-left-col { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+        }
+        .swan-logo { 
+            width: 60px; 
+            height: auto; 
+            filter: brightness(0) invert(1); /* Logo trắng */
+        }
+        .footer-copyright { 
+            font-size: 1rem; 
+            color: #ffffff; 
+            font-weight: 400; 
+            text-decoration: underline; 
+            text-underline-offset: 4px; 
+        }
+
+        /* Cột phải (Liên hệ) */
+        .footer-right-col { 
+            text-align: right; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-end; 
+            gap: 25px; 
+        }
+        .back-to-top { 
+            background: none; 
+            border: none; 
+            color: #aaa; 
+            text-transform: uppercase; 
+            font-size: 0.8rem; 
+            font-weight: 600; 
+            cursor: pointer; 
+            margin-bottom: 20px; 
+        }
+        .back-to-top:hover { color: #fff; }
+
+        .contact-group { display: flex; flex-direction: column; gap: 5px; }
+        .contact-label { color: #888; font-size: 1rem; font-weight: 500; }
+        .contact-value { 
+            color: #ffffff; 
+            font-size: 1.4rem; 
+            font-weight: 600; 
+            text-decoration: underline; 
+            text-underline-offset: 4px; 
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .footer-section { padding: 60px 0; }
+            .footer-section .container { padding-left: 20px !important; padding-right: 20px !important; }
+            
+            .footer-brand-img { margin-bottom: 20px; }
+            
+            .footer-bottom-row { 
+                flex-direction: column; 
+                gap: 50px; 
+                align-items: flex-start; 
+            }
+            .footer-right-col { 
+                align-items: flex-start; 
+                text-align: left; 
+                width: 100%; 
+            }
+        }
+
+
+        /* =========================================
+           11. MEDIA QUERIES (RESPONSIVE)
+           ========================================= */
+        
+        /* Laptop Nhỏ (1400px trở xuống) */
+        @media (max-width: 1400px) {
+            .main-header .header-layout { padding: 0 5px !important; gap: 15px !important; }
+            .left-nav a { font-size: 0.95rem !important; }
+            .left-nav ul { gap: 20px !important; }
+            .btn-header-contact { padding: 12px 25px !important; font-size: 1rem !important; }
+            
+            .report-title-main { font-size: 5rem; }
+            .doctor-circle-mask { width: 600px; height: 600px; }
+            .report-visual-right { margin-left: -50px; }
+        }
+
+        /* Tablet Landscape (1200px trở xuống) */
+        @media (max-width: 1200px) {
+            .tech-features-grid { max-width: 100%; padding: 0 20px; gap: 20px; }
+            
+            .target-layout { flex-direction: column; text-align: center; gap: 50px; margin-left: 0; width: 100%; }
+            .target-info { width: 100%; padding: 0; }
+            .target-visual { width: 100%; justify-content: center; height: 500px; margin-right: 0; padding-right: 0; margin-top: 60px; }
+            .visual-composition { width: 100%; margin-right: 0; margin-bottom: 0; }
+            .visual-bottle { width: 26%; bottom: 24%; }
+            .target-tabs, .cta-heading { white-space: normal !important; justify-content: center; flex-wrap: wrap; }
+            .target-list { display: inline-block; text-align: left; }
+            .target-title { transform: none; white-space: normal; }
+        }
+
+        /* Tablet & Mobile Lớn (1024px trở xuống) */
+        @media (max-width: 1024px) {
+            /* Header Mobile Style */
+            .main-header { padding: 10px 0 !important; overflow: visible !important; }
+            .header-layout { display: flex !important; justify-content: space-between !important; padding: 0 15px !important; }
+            .logo-pill, .left-nav, .header-logo-desktop { display: none !important; }
+            
+            /* Logo Mobile M+ */
+            .mobile-logo-img { display: block !important; height: 38px !important; width: auto !important; margin-top: 5px; }
+            .center-logo { position: static !important; transform: none !important; margin: 0 !important; }
+            
+            /* Ẩn logo M+ khi ở trang Hero (để hiện Logo To) */
+            .center-logo.hidden { opacity: 0 !important; pointer-events: none !important; }
+
+            /* Nút Liên hệ Mobile */
+            .right-cta { display: block !important; }
+            .btn-header-contact { font-size: 0.75rem !important; padding: 0 15px !important; height: 38px !important; display: flex; align-items: center; }
+
+            /* Hero Big Logo Mobile */
+            .hero-big-logo { 
+                display: flex !important; position: absolute !important; 
+                top: 75px !important; left: 50% !important; transform: translateX(-50%) !important;
+                width: 92% !important; max-width: 380px; height: 54px !important;
+                background: #ffffff !important; border-radius: 50px !important; padding: 0 !important;
+                z-index: 100 !important; animation: none !important;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+            }
+            .img-logo-big-mobile { 
+                display: block !important; width: 100% !important; height: auto !important; 
+                border-radius: 50px !important; /* Bo tròn ảnh theo khung */
+                filter: none !important; /* Bỏ bóng đổ ảnh vì đã có bóng khung */
+            }
+            
+            /* Đẩy nội dung Hero xuống */
+            .hero-content { padding-top: 150px !important; }
+            
+            /* Ingredients Mobile */
+            .ingredients-layout-art { height: 500px; }
+            .art-bubble { width: 150px; height: 150px; }
+            .bubble-content { font-size: 1.5rem; }
+            .pos-top-left { top: 0; left: 0; }
+            .pos-top-right { top: 0; right: 0; }
+            .pos-bottom-left { bottom: 0; left: 0; }
+            .pos-bottom-right { bottom: 0; right: 0; }
+            
+            /* Report Mobile */
+            .report-grid { flex-direction: column; text-align: center; }
+            .report-content-left { width: 100%; padding: 0; margin-bottom: 50px; }
+            .report-title-main { white-space: normal; }
+            .report-visual-right { width: 100%; margin-left: 0; justify-content: center; }
+            .doctor-circle-mask { width: 450px; height: 450px; margin-right: 0; }
+            .floating-bottle-report { width: 250px; left: 50%; bottom: -40px; transform: translateX(-50%) rotate(-10deg); }
+            @keyframes floatBottleFixed {
+                0%, 100% { transform: translateX(-50%) rotate(-10deg) translateY(0); }
+                50% { transform: translateX(-50%) rotate(-10deg) translateY(-15px); }
+            }
+        }
+
+        /* Mobile (768px trở xuống) */
+        @media (max-width: 768px) {
+            /* --- FINAL FIX MOBILE HEADER: NÚT ĐỎ 1 DÒNG --- */
+            .header-layout { gap: 10px !important; }
+            .mobile-logo-img { height: 36px !important; flex-shrink: 0; }
+            .btn-header-contact {
+                white-space: nowrap !important;
+                flex-direction: row !important;
+                font-size: 10px !important; /* Chữ nhỏ để vừa 1 dòng */
+                font-weight: 800 !important;
+                height: 36px !important; /* Đồng bộ chiều cao với logo */
+                padding: 0 12px !important;
+                background-color: #D30000 !important; color: #ffffff !important;
+                border: none !important; box-shadow: none !important;
+            }
+
+            /* Tech Grid */
+            .tech-features-grid { flex-direction: column; align-items: center; gap: 40px; }
+
+            /* Footer Mobile */
+            .footer-section { padding: 40px 0; }
+            .footer-section .container { padding-left: 15px !important; padding-right: 15px !important; }
+            
+            .footer-top-row { flex-direction: column; gap: 30px; margin-bottom: 40px; }
+            .footer-menu { flex-direction: column; gap: 15px; text-align: center; }
+            
+            .footer-banner-row { margin-bottom: 40px !important; }
+            .footer-brand-img { filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2)); }
+
+            .footer-bottom-row { flex-direction: column; gap: 50px; align-items: flex-start; }
+            .footer-right-col { align-items: flex-start; text-align: left; width: 100%; }
+        }
+
+        /* Màn hình siêu nhỏ */
+        @media (max-width: 380px) {
+            .line-serif { font-size: 3.2rem !important; }
+            .hero-big-logo { width: 95% !important; }
+            .btn-header-contact { font-size: 9px !important; padding: 0 8px !important; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container header-layout">
+            <nav class="left-nav">
+                <ul>
+                    <li><a href="#tac-dung">TÁC DỤNG</a></li>
+                    <li><a href="#thanh-phan">THÀNH PHẦN</a></li>
+                    <li><a href="#bao-cao">BÁO CÁO KHOA HỌC</a></li>
+                </ul>
+            </nav>
+
+            <div class="center-logo">
+                <img src="images/logo_desktop_header_red.png" alt="Medicell Red" class="header-logo-desktop logo-red">
+                <img src="images/logo_desktop_header_white.png" alt="Medicell White" class="header-logo-desktop logo-white">
+                <img src="images/Logo_mobile.png" alt="M+ Logo" class="mobile-logo-img">
+            </div>
+
+            <div class="right-cta">
+                <a href="tel:0916887158" class="btn-header-contact">LIÊN HỆ NGAY: 0916.887.158</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <video class="bg-video-hero" autoplay muted loop playsinline>
+            <source src="videos/page1_func_1.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-content">
+            <div class="hero-big-logo">
+                <img src="images/logo_desktop.png" class="img-logo-big-mobile" alt="Medicell Premium">
+            </div>
+            
+            <div class="hero-text-group">
+                <div class="text-block-left">
+                    <p class="line-sans">Vẻ đẹp</p>
+                    <h1 class="line-serif">hồi sinh</h1>
+                </div>
+                <div class="text-block-right">
+                    <p class="line-sans">từ sâu</p>
+                    <h2 class="line-serif">bên trong</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-intro light-bg">
+        <div class="bg-text-wrapper">
+            <div class="big-serif-text">Medicell Plus Premium &nbsp;&nbsp;&nbsp;&nbsp; Medicell Plus Premium</div>
+            <div class="big-serif-text">Medicell Plus Premium &nbsp;&nbsp;&nbsp;&nbsp; Medicell Plus Premium</div>
+        </div>
+
+        <div class="container intro-content">
+            <p class="intro-label">Giới thiệu</p>
+            <div class="bottle-showcase">
+                <div class="glow-circle"></div>
+                <div class="water-sphere"></div>
+                
+                <div class="light-flare-left"></div>
+                <div class="light-flare-right"></div>
+
+                <img src="images/page2_func1_1.png" alt="Chai Medicell" class="main-bottle"> 
+            </div>
+            <h2 class="product-title-large">Dịch chiết nuôi cấy tế bào</h2>
+            <p style="color:#888;">5ml / 0.16 fl.oz.</p>
+        </div>
+    </section>
+
+    <section class="benefits-section light-bg" id="tac-dung">
+        <div class="container benefits-layout">
+            <div class="benefits-sidebar">
+                <h2 class="benefits-title-main">Tái tạo <br><span class="benefits-title-highlight">vẻ đẹp</span></h2>
+                <p class="benefits-desc">từ tầng biểu bì thấp nhất cho</p>
+                <h3 class="benefits-subtitle">hàng trăm <br> khách hàng</h3>
+                <img src="images/page2_func1_1.png" alt="Small Bottle" class="sidebar-bottle">
+            </div>
+            <div class="benefits-list">
+                <div class="benefit-scroll-card">
+                    <div class="card-top-info">
+                        <span class="b-tag">Tái tạo da và giảm 36% ban đỏ*</span>
+                        <h3 class="b-title">Điều trị hiệu quả <br> sẹo vết thương chưa lành</h3>
+                    </div>
+                    <div class="compare-grid">
+                        <div class="compare-item"><img src="images/page3_func1_1.png" alt="Trước"><span class="compare-label">Vết thương sâu ngày đầu</span></div>
+                        <div class="compare-item"><img src="images/page3_func1_2.png" alt="Sau"><span class="compare-label">Ngày 7 dùng Medicell</span></div>
+                        <div class="compare-item"><img src="images/page3_func1_3.png" alt="Sau"><span class="compare-label">Ngày 30 dùng Medicell</span></div>
+                    </div>
+                </div>
+                <div class="benefit-scroll-card">
+                    <div class="card-top-info">
+                        <span class="b-tag">Chống oxi hóa và làm trắng da</span>
+                        <h3 class="b-title">Giúp trẻ hoá, căng da <br> Làm mờ nếp nhăn</h3>
+                    </div>
+                    <div class="compare-grid">
+                        <div class="compare-item"><img src="images/page3_func2_1.png" alt="Trước"><span class="compare-label">Ngày đầu</span></div>
+                        <div class="compare-item"><img src="images/page3_func2_2.png" alt="Sau"><span class="compare-label">Ngày 7 dùng Medicell</span></div>
+                    </div>
+                </div>
+                <div class="benefit-scroll-card">
+                    <div class="card-top-info">
+                        <span class="b-tag">Lấp đầy sẹo lõm</span>
+                        <h3 class="b-title">Điều trị hiệu quả <br> sẹo do mụn, rỗ</h3>
+                    </div>
+                    <div class="compare-grid">
+                        <div class="compare-item"><img src="images/page3_func3_1.png" alt="Trước"><span class="compare-label">Ngày đầu</span></div>
+                        <div class="compare-item"><img src="images/page3_func3_2.png" alt="Sau"><span class="compare-label">Ngày 7 dùng Medicell</span></div>
+                    </div>
+                </div>
+                <div class="benefit-scroll-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+                        <div class="card-info">
+                            <span class="b-tag">Tái tạo lớp biểu bì da đầu, sản sinh ketamine</span>
+                            <h3 class="b-title" style="margin-top: 10px;">Kích thích tăng trưởng <br> trẻ hoá nang tóc</h3>
+                        </div>
+                        <img src="images/page3_func4_1.png" alt="Nang tóc" style="width: 150px; height: 150px; object-fit: contain; border-radius: 10px;">
+                    </div>
+                </div>
+                <p style="margin-top: 20px; font-size: 0.9rem; color: #888; font-style: italic;">*Hiệu quả đo được sau 3-4 tuần thoa dịch chiết.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="ingredients" id="thanh-phan">
+        <div class="report-flare-common report-flare-top"></div>
+        <div class="report-flare-common report-flare-bottom"></div>
+        <div class="container">
+            <h2 class="section-title-center">Thành phần</h2>
+            
+            <div class="ingredients-layout-art">
+                <div class="center-art"><img src="images/page4_func1_1.png" alt="Medicell Art" class="art-img"></div>
+                
+                <div class="art-bubble pos-top-left" data-key="gfs">
+                    <div class="bubble-content">GFs</div>
+                    <div class="bubble-desc-short">8 yếu tố<br>tăng trưởng da</div>
+                </div>
+                
+                <div class="art-bubble pos-top-right" data-key="peptide">
+                    <div class="bubble-content">Peptide</div>
+                    <div class="bubble-desc-short">Chống lão hoá, viêm<br>và giảm nếp nhăn</div>
+                </div>
+                
+                <div class="art-bubble pos-bottom-left" data-key="cytokine">
+                    <div class="bubble-content">Cytokine</div>
+                    <div class="bubble-desc-short">Điều hoà khả năng<br>miễn dịch cho da</div>
+                </div>
+                
+                <div class="art-bubble pos-bottom-right" data-key="collagen">
+                    <div class="bubble-content">Collagen</div>
+                    <div class="bubble-desc-short">Công nghệ thuỷ phân<br>tăng hấp thu tối đa</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-card">
+            <button class="btn-close-modal" onclick="closePopup()">ĐÓNG</button>
+            <h2 class="modal-title" id="mTitle">GFs</h2>
+            <div class="modal-img-wrapper">
+                <img src="images/page6_func1_1.png" alt="Detail" class="modal-img" id="mImage">
+            </div>
+            <div id="mContent">
+                </div>
+        </div>
+    </div>
+
+    <section class="technology" id="cong-nghe">
+        <video class="bg-video" autoplay muted loop playsinline>
+            <source src="videos/page5_func_1.mp4" type="video/mp4">
+            </video>
+
+        <div class="tech-overlay"></div>
+        <div class="report-flare-common report-flare-top"></div>
+        <div class="report-flare-common report-flare-bottom"></div>
+        <div class="container tech-content-wrapper">
+            <div class="tech-header">
+                <p class="tech-subtitle">Công nghệ đột phá</p>
+                <h2 class="tech-title-main">Liposome</h2>
+            </div>
+            <div class="tech-features-grid">
+                <div class="tech-feature-item">
+                    <p>Tạo màng bảo vệ <br> cho các hoạt chất <br> không bị phân huỷ</p>
+                </div>
+                <div class="tech-feature-item">
+                    <p>Tự động tìm kiếm <br> vùng tổn thương da</p>
+                </div>
+                <div class="tech-feature-item">
+                    <p>Loại bỏ nếp nhăn, <br> chữa lành tổn thương <br> tốt hơn 3 lần*</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="report-section light-bg" id="bao-cao">
+        <div class="report-flare-common report-flare-top"></div>
+        <div class="report-flare-common report-flare-bottom"></div>
+
+        <div class="container">
+            <div class="report-grid">
+                <div class="report-content-left">
+                    <h2 class="report-title-main">Báo cáo khoa học</h2>
+                    <p class="report-desc">Nội dung chính của báo cáo <br> thể hiện điều gì</p>
+                    <button class="btn-report">Xem báo cáo</button>
+                    <div class="report-author-box">
+                        <p class="author-label">Thực hiện bởi</p>
+                        <p class="author-name">Đội ngũ bác sĩ Đại học Y Hà Nội</p>
+                    </div>
+                </div>
+                
+                <div class="report-visual-right">
+                    <div class="doctor-circle-mask">
+                        <img src="images/page6_func1_6.png" alt="Lab Doctors" class="doctor-img">
+                    </div>
+                    <img src="images/page6_func1_2.png" alt="Medicell Bottle" class="floating-bottle-report">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="target-audience target-section" id="danh-cho">
+        <div class="report-flare-common report-flare-top"></div>
+        <div class="report-flare-common report-flare-bottom"></div>
+
+        <div class="container">
+            <div class="target-layout">
+                <div class="target-info">
+                    <h2 class="target-title">Dành cho</h2>
+                    <div class="target-tabs">
+                        <span class="tab-item active">Phòng khám da liễu</span>
+                        <span class="tab-item inactive">Spa làm đẹp</span>
+                    </div>
+                    <div class="target-divider"></div>
+                    <p class="target-desc">Medicell Plus Premium là sản phẩm thích hợp để:</p>
+                    <ul class="target-list">
+                        <li>Hồi phục hậu phẫu thuật</li>
+                        <li>Dịch vụ 2</li>
+                        <li>Dịch vụ 3</li>
+                        <li>Dịch vụ 4</li>
+                        <li>Dịch vụ 5</li>
+                    </ul>
+                    <div class="target-cta-group">
+                        <h3 class="cta-heading">Để được tư vấn kỹ hơn</h3>
+                        <a href="tel:0916887158" class="btn-target-contact">LIÊN HỆ NGAY: 0916.887.158</a>
+                    </div>
+                </div>
+                
+                <div class="target-visual">
+                    <div class="visual-composition">
+                        <img src="images/page6_func1_1.png" alt="Background Scene" class="visual-bg">
+                        <img src="images/page6_func1_3.png" alt="Medicell Bottle" class="visual-bottle">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-section" id="lien-he">
+        <div class="container">
+            
+            <div class="footer-banner-row">
+                <img src="images/logo_desktop.png" alt="Medicell Plus Premium" class="footer-brand-img">
+            </div>
+
+            <div class="footer-bottom-row">
+                <div class="footer-left-col">
+                    <img src="images/page8_func1_2.png" alt="Logo Ngân Phát" class="swan-logo">
+                    <p class="footer-copyright">© 2025, Công ty TNHH TM Ngân Phát</p>
+                </div>
+
+                <div class="footer-right-col">
+                    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">QUAY LẠI ĐẦU TRANG</button>
+                    
+                    <div class="contact-group">
+                        <span class="contact-label">Hotline</span>
+                        <a href="tel:0916887158" class="contact-value">0916.887.158</a>
+                    </div>
+
+                    <div class="contact-group">
+                        <span class="contact-label">E-mail</span>
+                        <a href="mailto:nganphat63.hanh@gmail.com" class="contact-value">nganphat63.hanh@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal-card report-card-wide">
+            <button class="btn-close-modal" id="btnCloseReport">ĐÓNG</button>
+            
+            <div class="report-content-body">
+                <h2 class="modal-title" style="font-size: 2rem; margin-bottom: 10px;">KẾT QUẢ NGHIÊN CỨU</h2>
+                <p style="font-style: italic; color: #666; margin-bottom: 20px;">
+                    Khả năng kích ứng da và tác dụng của Medicell Plus Premium trên thực nghiệm
+                </p>
+                
+                <div style="background: #fff; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px dashed #ddd;">
+                    <p><strong>Nơi tiến hành:</strong> Bộ môn Dược lý & Trung tâm Dược lý lâm sàng - Đại học Y Hà Nội</p>
+                    <p><strong>Thành viên tham gia:</strong> PGS. TS. Phạm Thị Vân Anh, TS. Trần Thanh Tùng, TS. Nguyễn Thị Thanh Loan.</p>
+                    <p><strong>Thời gian:</strong> Năm 2025</p>
+                </div>
+
+                <div class="modal-section-title">1. KẾT QUẢ VỀ KÍCH ỨNG DA</div>
+                <p class="modal-text">
+                    Kết quả nghiên cứu trên thỏ thực nghiệm cho thấy vùng da bôi Medicell Plus Premium không có hiện tượng ban đỏ và phù nề ở tất cả các thời điểm nghiên cứu (1h, 24h, 48h, 72h).
+                </p>
+                <p class="modal-text" style="color: #D30000; font-weight: 700;">
+                    => KẾT LUẬN: Medicell Plus Premium KHÔNG GÂY KÍCH ỨNG DA trên thực nghiệm (Chỉ số kích ứng = 0).
+                </p>
+
+                <div class="modal-section-title">2. TÁC DỤNG LIỀN VẾT THƯƠNG</div>
+                <p class="modal-text">
+                    Nghiên cứu trên mô hình vết cắt da chuột nhắt trắng cho thấy:
+                </p>
+                <ul style="list-style: disc; padding-left: 20px; margin-bottom: 10px; color: #444;">
+                    <li>Sau 7 ngày và 14 ngày: Diện tích tổn thương giảm rõ rệt so với lô chứng.</li>
+                    <li>Nồng độ Hydroxyprolin (chất chỉ thị sinh collagen) tăng cao có ý nghĩa thống kê.</li>
+                    <li>Cấu trúc vi thể da phục hồi tốt, biểu mô hóa nhanh.</li>
+                </ul>
+                <p class="modal-text" style="color: #D30000; font-weight: 700;">
+                    => Medicell Plus Premium có tác dụng TĂNG LIỀN VẾT THƯƠNG rõ rệt.
+                </p>
+
+                <div class="modal-section-title">3. TÁC DỤNG ĐIỀU TRỊ BỎNG</div>
+                <p class="modal-text">
+                    Trên mô hình gây bỏng nhiệt, sản phẩm cho thấy hiệu quả:
+                </p>
+                <ul style="list-style: disc; padding-left: 20px; margin-bottom: 10px; color: #444;">
+                    <li>Giảm diện tích vết bỏng nhanh chóng sau 14 và 21 ngày.</li>
+                    <li>Tăng sinh mạch máu tân tạo và nguyên bào sợi giúp phục hồi mô.</li>
+                    <li>Không gây độc tính toàn thân (chức năng gan, thận, tạo máu bình thường) sau 21 ngày sử dụng liên tục.</li>
+                </ul>
+
+                <div class="modal-section-title">TỔNG KẾT</div>
+                <div style="background: #FFF5F7; padding: 15px; border-radius: 10px; border-left: 4px solid #D30000;">
+                    <p class="modal-text" style="margin: 0; font-weight: 600;">
+                        "Sản phẩm Medicell Plus Premium an toàn, không gây kích ứng, có tác dụng tốt trong việc thúc đẩy liền vết thương và hỗ trợ điều trị bỏng, tái tạo da hiệu quả."
+                    </p>
+                </div>
+                
+                <p style="text-align: right; margin-top: 20px; font-weight: 700; color: #333;">
+                    TM. Nhóm nghiên cứu<br>TS. BS. Trần Thanh Tùng
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        // LOGIC ẨN/HIỆN LOGO HEADER VÀ ĐỔI MÀU
+        const header = document.querySelector('.main-header');
+        const centerLogo = document.querySelector('.center-logo');
+        
+        // Theo dõi xem người dùng đang xem trang nào
+        const headerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Nếu đang ở Hero (Trang 1) -> Ẩn Logo Header
+                    if (entry.target.classList.contains('hero') || entry.target.id === 'lien-he') {
+                        centerLogo.classList.add('hidden');
+                        header.classList.remove('dark-text-mode', 'video-mode', 'red-style');
+                    } 
+                    
+                    else {
+                        header.classList.remove('header-hidden');
+                        // Các trang khác -> Hiện Logo Header
+                        centerLogo.classList.remove('hidden');
+                        
+                        // Xử lý màu sắc Header
+                        if (entry.target.id === 'cong-nghe') {
+                            // Chế độ Video: Logo Trắng - Chữ Trắng
+                            header.classList.add('video-mode');
+                            header.classList.remove('dark-text-mode', 'red-style');
+                        }
+                        else if (entry.target.id === 'danh-cho') {
+                            // Page 7 (MỚI): Logo Đỏ - Chữ Đen (Giống ảnh bạn gửi)
+                            header.classList.add('red-style');
+                            header.classList.remove('dark-text-mode', 'video-mode');
+                        }
+                        else if (entry.target.classList.contains('light-bg')) {
+                            // Chế độ Nền sáng: Logo Trắng - Chữ Đen/Đỏ
+                            header.classList.add('dark-text-mode');
+                            header.classList.remove('video-mode', 'red-style');
+                        } 
+                        else {
+                            // Chế độ Mặc định: Logo Đỏ - Chữ Trắng
+                            header.classList.remove('dark-text-mode', 'video-mode', 'red-style');
+                        }
+                    }
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('section, footer').forEach(section => {
+            headerObserver.observe(section);
+        });
+
+        // Logic thẻ bài viết
+        const observerOptions = { root: null, rootMargin: '-40% 0px -40% 0px', threshold: 0 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.benefit-scroll-card').forEach(card => card.classList.remove('active'));
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.benefit-scroll-card').forEach(card => { observer.observe(card); });
+
+        // Dữ liệu nội dung chi tiết cho từng thành phần
+        const ingredientsData = {
+            'gfs': {
+                title: 'GFs', 
+                img: 'images/page6_func1_1.png', 
+                content: `
+                    <div class="modal-section-title">Bao gồm</div>
+                    <p class="modal-text">IGF-1, FGF, KGF, TGF, GDF, VEGF, HGF, PDGF</p>
+                    <div class="modal-section-title">IGF-1</div>
+                    <p class="modal-text">Giảm ngứa, giảm viêm nhiễm (ức chế các phản ứng miễn dịch không cần thiết).</p>
+                    <div class="modal-section-title">FGF</div>
+                    <p class="modal-text">Tăng cường hàng rào bảo vệ da bị tổn thương (kích thích tăng sinh tế bào keratine), thúc đẩy tổng hợp collagen và elastine tăng hiệu quả chống lão hóa.</p>
+                    <div class="modal-section-title">KGF</div>
+                    <p class="modal-text">Tăng cường sản sinh collagen - 1 loại protein giúp da đàn hồi và ức chế quá trình lão hóa, mang lại hiệu quả cải thiện nếp nhăn.</p>
+                `
+            },
+            'peptide': {
+                title: 'Peptide', 
+                img: 'images/page6_func1_1.png', 
+                content: `
+                    <p class="modal-text" style="font-weight:bold; margin-bottom:15px;">Sự kết hợp của 6 loại Peptide có hiệu quả chống lão hóa, giảm nếp nhăn và chống viêm.</p>
+                    <div class="modal-section-title">Hiệu quả chống viêm</div>
+                    <p class="modal-text">Ức chế các phản ứng viêm nảy sinh trong quá trình lên men, tăng cường hàng rào bảo vệ da.</p>
+                `
+            },
+            'cytokine': {
+                title: 'Cytokine', 
+                img: 'images/page6_func1_1.png',
+                content: `
+                    <p class="modal-text" style="font-size: 1.1rem; line-height: 1.8;">
+                        Là nhóm phân tử Protein đóng vai trò là chất trung gian giữa các tế bào, đóng vai trò chất truyền tín hiệu trong hệ miễn dịch điều hòa khả năng miễn dịch.
+                    </p>
+                `
+            },
+            'collagen': {
+                title: 'Collagen', 
+                img: 'images/page6_func1_1.png',
+                content: `
+                    <div class="modal-section-title">Bao gồm</div>
+                    <p class="modal-text">Collagen, Collagen Amino Acid, Soluble Collagen, Desamido Collagen, Hydrolyzed Collagen, Collagen Extract, Procollagen</p>
+                    <p class="modal-text" style="font-weight:bold; font-size: 1.1rem; margin-top: 20px;">Sự kết hợp của 7 loại collagen thủy phân có tác dụng:</p>
+                    <div class="modal-section-title">Hấp thụ nước tối ưu</div>
+                    <p class="modal-text">Collagen giúp hấp thụ nước một cách tối ưu, điều này rất có ích trong việc chăm sóc da và giúp da trở nên mịn màng hơn.</p>
+                `
+            }
+        };
+
+        const modalOverlay = document.getElementById('infoModal');
+        const mTitle = document.getElementById('mTitle');
+        const mImage = document.getElementById('mImage');
+        const mContent = document.getElementById('mContent');
+        const closeBtn = document.querySelector('.btn-close-modal');
+        
+        let hoverTimer = null; 
+        const HOVER_DELAY = 1500; 
+
+        const bubbles = document.querySelectorAll('.art-bubble');
+
+        bubbles.forEach(bubble => {
+            bubble.addEventListener('mouseenter', () => {
+                const key = bubble.getAttribute('data-key');
+                if (hoverTimer) clearTimeout(hoverTimer);
+                hoverTimer = setTimeout(() => {
+                    openPopupCenter(key);
+                }, HOVER_DELAY);
+            });
+            bubble.addEventListener('mouseleave', () => {
+                if (hoverTimer) clearTimeout(hoverTimer);
+            });
+            bubble.addEventListener('click', () => {
+                const key = bubble.getAttribute('data-key');
+                if (hoverTimer) clearTimeout(hoverTimer);
+                openPopupCenter(key);
+            });
+        });
+
+        function openPopupCenter(key) {
+            const data = ingredientsData[key];
+            if (!data) return;
+            mTitle.innerText = data.title;
+            mImage.src = data.img; 
+            mContent.innerHTML = data.content;
+            modalOverlay.classList.add('open');
+        }
+
+        function closePopup() {
+            modalOverlay.classList.remove('open');
+            if (hoverTimer) clearTimeout(hoverTimer);
+        }
+
+        if(closeBtn) {
+            closeBtn.addEventListener('click', closePopup);
+        }
+
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                closePopup();
+            }
+        });
+        // --- LOGIC MỞ POPUP BÁO CÁO KHOA HỌC ---
+        const btnOpenReport = document.querySelector('.btn-report'); // Nút "Xem báo cáo"
+        const reportModal = document.getElementById('reportModal');  // Popup báo cáo
+        const btnCloseReport = document.getElementById('btnCloseReport'); // Nút đóng
+
+        if (btnOpenReport && reportModal) {
+            // Click nút -> Mở
+            btnOpenReport.addEventListener('click', (e) => {
+                e.preventDefault(); // Chặn load lại trang nếu là thẻ a
+                reportModal.classList.add('open');
+            });
+
+            // Click đóng -> Đóng
+            btnCloseReport.addEventListener('click', () => {
+                reportModal.classList.remove('open');
+            });
+
+            // Click ra ngoài -> Đóng
+            reportModal.addEventListener('click', (e) => {
+                if (e.target === reportModal) {
+                    reportModal.classList.remove('open');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
